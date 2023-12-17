@@ -15,6 +15,7 @@ import {
   createBrowserRouter,
   useNavigate,
 } from "react-router-dom";
+import AuthError from "./scenes/Authentication/Error";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
     element: <Login />,
     loader: loginLoader,
     action: loginAction,
+    errorElement: <AuthError />,
   },
   {
     path: "/",
