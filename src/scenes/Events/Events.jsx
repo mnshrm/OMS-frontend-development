@@ -57,6 +57,7 @@ const Events = () => {
                     {", " + event.venue}
                   </Typography>
                 </ListItemText>
+
                 <Button
                   onClick={() => {
                     navigate("/event/" + event._id);
