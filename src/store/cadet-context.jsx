@@ -13,5 +13,5 @@ export const CadetDetailsContext = createContext({
   },
   loginCadet: (cadetDetails) => {},
   logoutCadet: () => {},
-  upadateCadetDetails: (cadetDetails) => {},
+  updateCadetDetails: (cadetDetails) => {},
 });

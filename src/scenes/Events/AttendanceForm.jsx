@@ -32,6 +32,8 @@ const AttendanceForm = (props) => {
         flexDirection: "column",
         gap: "1rem",
       }}
+      action={"/event/" + props.id}
+      method="POST"
     >
       <Box
         sx={{
@@ -55,11 +57,13 @@ const AttendanceForm = (props) => {
         onChange={handleStatusChange}
         value={attendance.status}
         label="Mark Attendance"
+        name="status"
       >
         <MenuItem value={"Present"}>Present</MenuItem>
         <MenuItem value={"Absent"}>Absent</MenuItem>
       </Select>
       <TextField
+        name="reason"
         disabled={attendance.status !== "Absent"}
         required
         label="Reason"
@@ -67,7 +71,9 @@ const AttendanceForm = (props) => {
         placeholder="Reason for not being present"
         onChange={handleReasonChange}
       />
-      <Button variant="contained">Submit</Button>
+      <Button variant="contained" type="submit">
+        Submit
+      </Button>
     </Form>
   );
 };

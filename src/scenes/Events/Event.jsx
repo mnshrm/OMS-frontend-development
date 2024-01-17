@@ -1,14 +1,16 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import {
+  Alert,
   Box,
   Button,
   IconButton,
   InputLabel,
   Select,
+  Snackbar,
   Typography,
 } from "@mui/material";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, json, useActionData, useLoaderData } from "react-router-dom";
 import { CadetDetailsContext } from "../../store/cadet-context";
 import Nominal from "./Nominal";
 import AttendancePie from "./AttendancePie";
@@ -22,13 +24,56 @@ const Event = () => {
   const {
     cadet: { rank },
   } = useContext(CadetDetailsContext);
-
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "right",
+    message: "",
+    severity: "success",
+  });
+  const { vertical, horizontal, open, message, severity } = state;
   const changeOverlay = useCallback((value) => {
     setOverlay(value);
   }, []);
+  const actionData = useActionData("/event/:id");
+  useEffect(() => {
+    if (actionData) {
+      if (actionData.success)
+        setState({
+          ...state,
+          open: true,
+          message: actionData.message,
+        });
+      else {
+        console.log("here");
+        setState({
+          ...state,
+          open: true,
+          message: actionData.message,
+          severity: "error",
+        });
+      }
+    }
+  }, [actionData]);
+
+  // To handle closing of snackbar (notification) component
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
 
   return (
     <>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
       <Header title={"Event details"} />
       <Box
         sx={{
@@ -75,7 +120,10 @@ const Event = () => {
             </Button>
             {overlay === "form" && (
               <Overlay>
-                <AttendanceForm closeOverlay={changeOverlay.bind(null, "")} />
+                <AttendanceForm
+                  id={eventData.event._id}
+                  closeOverlay={changeOverlay.bind(null, "")}
+                />
               </Overlay>
             )}
             {overlay === "nominal" && rank !== "CDT" && rank !== "LCPL" && (
@@ -142,4 +190,29 @@ export const loader = async ({ params }) => {
     credentials: "include",
   });
   return response;
+};
+
+// This action marks attendance of cadets
+// Works with attendance form component
+// When submit button is pressed in attendance form, this function is invoked
+// it sends form data along with JSON token to backend server.
+export const action = async ({ request, params }) => {
+  const formData = await request.formData();
+  const attendanceDetails = {};
+  attendanceDetails.status = formData.get("status");
+  attendanceDetails.reason = formData.get("reason");
+  const response = await fetch(
+    `http://localhost:3000/attendance/${params.id}`,
+    {
+      method: "POST",
+      body: JSON.stringify(attendanceDetails),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }
+  );
+  if (!response.ok) return { success: false, message: "Internal server error" };
+
+  return { success: true, message: "Attendance marked" };
 };

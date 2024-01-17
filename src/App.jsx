@@ -2,7 +2,10 @@ import Root from "./scenes/RootLayout/Root";
 import Error from "./scenes/ErrorPage/Error";
 import Profile from "./scenes/Profile/Profile";
 import Events, { loader as eventsLoader } from "./scenes/Events/Events";
-import Event, { loader as eventLoader } from "./scenes/Events/Event";
+import Event, {
+  loader as eventLoader,
+  action as attendanceAction,
+} from "./scenes/Events/Event";
 import CadetInfo from "./scenes/CadetInfo/CadetInfo";
 import Dashboard from "./scenes/Dashboard/Dashboard";
 import Login, {
@@ -47,6 +50,7 @@ const router = createBrowserRouter([
         path: "event/:id",
         element: <Event />,
         loader: eventLoader,
+        action: attendanceAction,
       },
       {
         path: "cadetInfo",

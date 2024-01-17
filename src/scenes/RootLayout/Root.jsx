@@ -19,7 +19,6 @@ const Root = () => {
   }, []);
 
   const navigation = useNavigation();
-  console.log(navigation.state);
 
   return (
     <div className="app">
