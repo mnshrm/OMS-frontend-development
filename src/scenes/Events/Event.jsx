@@ -4,13 +4,12 @@ import {
   Alert,
   Box,
   Button,
+  ButtonGroup,
   IconButton,
-  InputLabel,
-  Select,
   Snackbar,
   Typography,
 } from "@mui/material";
-import { Form, json, useActionData, useLoaderData } from "react-router-dom";
+import { useActionData, useLoaderData } from "react-router-dom";
 import { CadetDetailsContext } from "../../store/cadet-context";
 import Nominal from "./Nominal";
 import AttendancePie from "./AttendancePie";
@@ -61,6 +60,32 @@ const Event = () => {
     setState({ ...state, open: false });
   };
 
+  // To delete an event
+  const deleteEvent = useCallback(async () => {
+    const response = await fetch(
+      "http://localhost:3000/event/" + eventData.event._id,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      setState({
+        ...state,
+        open: true,
+        severity: "success",
+        message: "Event deleted, go back to all events page",
+      });
+    } else {
+      setState({
+        ...state,
+        open: true,
+        severity: "error",
+        message: "Internal server error",
+      });
+    }
+  }, []);
+
   return (
     <>
       <Snackbar
@@ -104,20 +129,39 @@ const Event = () => {
               <Typography variant="body1">
                 {eventData.event.description}
               </Typography>
+              <Typography variant="body1">
+                {"Event type : " + eventData.event.eventType}
+              </Typography>
             </Box>
-            <Button
-              variant="contained"
-              onClick={changeOverlay.bind(null, "form")}
-            >
-              Mark attendance
-            </Button>{" "}
-            <Button
-              variant="contained"
-              color="success"
-              onClick={changeOverlay.bind(null, "nominal")}
-            >
-              Check report
-            </Button>
+            <ButtonGroup>
+              <Button
+                variant="contained"
+                onClick={changeOverlay.bind(null, "form")}
+              >
+                Mark attendance
+              </Button>
+              {rank !== "LCPL" && rank !== "CDT" && (
+                <>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={changeOverlay.bind(null, "nominal")}
+                  >
+                    Check report
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={deleteEvent}
+                  >
+                    Delete Event
+                  </Button>
+                  <Button variant="contained" color="warning">
+                    Edit event
+                  </Button>
+                </>
+              )}
+            </ButtonGroup>
             {overlay === "form" && (
               <Overlay>
                 <AttendanceForm
