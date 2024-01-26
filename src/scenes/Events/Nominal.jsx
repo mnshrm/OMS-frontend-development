@@ -13,7 +13,6 @@ const Nominal = (props) => {
     <Box sx={{ width: "100%" }}>
       <DataGrid
         sx={{
-          overflowX: "scroll",
           "& .MuiDataGrid-toolbarContainer": {
             backgroundColor: "#afd4fa",
           },

@@ -63,7 +63,7 @@ const Event = () => {
   // To delete an event
   const deleteEvent = useCallback(async () => {
     const response = await fetch(
-      "http://localhost:3000/event/" + eventData.event._id,
+      "hhttps://api-gateway-zm1k.onrender.com/event/" + eventData.event._id,
       {
         method: "DELETE",
         credentials: "include",
@@ -156,9 +156,6 @@ const Event = () => {
                   >
                     Delete Event
                   </Button>
-                  <Button variant="contained" color="warning">
-                    Edit event
-                  </Button>
                 </>
               )}
             </ButtonGroup>
@@ -174,47 +171,55 @@ const Event = () => {
               <Overlay>
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
+                    backgroundColor: "white",
+                    padding: "1rem",
+                    borderRadius: "1rem",
                   }}
                 >
-                  <Typography fontWeight={"800"} variant="subtitle1">
-                    Nominal roll for {eventData.event.eventName}
-                  </Typography>
-                  <IconButton onClick={changeOverlay.bind(null, "")}>
-                    <Cancel
-                      sx={{
-                        color: "red",
-                        cursor: "pointer",
-                        marginLeft: "auto",
-                      }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography fontWeight={"800"} variant="subtitle1">
+                      Nominal roll for {eventData.event.eventName}
+                    </Typography>
+                    <IconButton onClick={changeOverlay.bind(null, "")}>
+                      <Cancel
+                        sx={{
+                          color: "red",
+                          cursor: "pointer",
+                          marginLeft: "auto",
+                        }}
+                      />
+                    </IconButton>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "1rem",
+                      alignItems: "center",
+                      margin: "1rem 0",
+                    }}
+                  >
+                    <Nominal
+                      rows={eventData.event.attendance.attendes.map(
+                        (attendee, ind) => ({
+                          ...attendee,
+                          id: ind + 1,
+                        })
+                      )}
+                      eventName={eventData.event.eventName}
                     />
-                  </IconButton>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "1rem",
-                    alignItems: "center",
-                    margin: "1rem 0",
-                  }}
-                >
-                  <Nominal
-                    rows={eventData.event.attendance.attendes.map(
-                      (attendee, ind) => ({
-                        ...attendee,
-                        id: ind + 1,
-                      })
-                    )}
-                    eventName={eventData.event.eventName}
-                  />
-                  <AttendancePie
-                    present={eventData.metrics.totalPresent}
-                    absent={eventData.metrics.totalAbsent}
-                    height={200}
-                    width={500}
-                  />
+                    <AttendancePie
+                      present={eventData.metrics.totalPresent}
+                      absent={eventData.metrics.totalAbsent}
+                      height={200}
+                      width={500}
+                    />
+                  </Box>
                 </Box>
               </Overlay>
             )}
@@ -230,9 +235,12 @@ const Event = () => {
 export default Event;
 
 export const loader = async ({ params }) => {
-  const response = await fetch("http://localhost:3000/event/" + params.id, {
-    credentials: "include",
-  });
+  const response = await fetch(
+    "https://api-gateway-zm1k.onrender.com/event/" + params.id,
+    {
+      credentials: "include",
+    }
+  );
   return response;
 };
 
@@ -246,7 +254,7 @@ export const action = async ({ request, params }) => {
   attendanceDetails.status = formData.get("status");
   attendanceDetails.reason = formData.get("reason");
   const response = await fetch(
-    `http://localhost:3000/attendance/${params.id}`,
+    `https://api-gateway-zm1k.onrender.com/attendance/${params.id}`,
     {
       method: "POST",
       body: JSON.stringify(attendanceDetails),

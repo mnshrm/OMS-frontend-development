@@ -1,12 +1,15 @@
 import Root from "./scenes/RootLayout/Root";
 import Error from "./scenes/ErrorPage/Error";
 import Profile from "./scenes/Profile/Profile";
-import Events, { loader as eventsLoader } from "./scenes/Events/Events";
+import Events, {
+  loader as eventsLoader,
+  action as createEventAction,
+} from "./scenes/Events/Events";
 import Event, {
   loader as eventLoader,
   action as attendanceAction,
 } from "./scenes/Events/Event";
-import CadetInfo from "./scenes/CadetInfo/CadetInfo";
+import CadetInfo, { loader as cadetLoader } from "./scenes/CadetInfo/CadetInfo";
 import Dashboard from "./scenes/Dashboard/Dashboard";
 import Login, {
   loader as loginLoader,
@@ -33,18 +36,19 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <Error />,
     children: [
+      // {
+      //   index: true,
+      //   element: <Dashboard />,
+      // },
       {
         index: true,
-        element: <Dashboard />,
-      },
-      {
-        path: "profile",
         element: <Profile />,
       },
       {
         path: "events",
         element: <Events />,
         loader: eventsLoader,
+        action: createEventAction,
       },
       {
         path: "event/:id",
@@ -55,6 +59,7 @@ const router = createBrowserRouter([
       {
         path: "cadetInfo",
         element: <CadetInfo />,
+        loader: cadetLoader,
       },
     ],
   },

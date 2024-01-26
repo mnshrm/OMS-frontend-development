@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Header from "../../components/Header";
 import {
   Box,
@@ -9,13 +9,24 @@ import {
   Typography,
 } from "@mui/material";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { CadetDetailsContext } from "../../store/cadet-context";
+import EventForm from "./EventForm";
+import Overlay from "../../components/Overlay";
+import dayjs from "dayjs";
 
 const Events = () => {
+  const [overlay, setOverlay] = useState(false);
+  const {
+    cadet: { rank },
+  } = useContext(CadetDetailsContext);
   const resData = useLoaderData();
   const navigate = useNavigate();
+  const toggleOverlay = useCallback(() => {
+    setOverlay((pv) => !pv);
+  }, []);
   return (
     <>
-      <Header title={"Events"} />
+      <Header title={"Available events"} />
       <Box
         sx={{
           width: "100%",
@@ -23,12 +34,22 @@ const Events = () => {
           borderRadius: "1rem",
           height: "80%",
           overflow: "scroll",
+          padding: "1rem",
         }}
       >
+        {rank !== "LCPL" && rank !== "CDT" && (
+          <Button variant="contained" onClick={toggleOverlay}>
+            Add event
+          </Button>
+        )}
+        {overlay && (
+          <Overlay>
+            <EventForm closeOverlay={toggleOverlay} />
+          </Overlay>
+        )}
         {resData.success ? (
           <List
             sx={{
-              padding: "1rem",
               display: "flex",
               flexDirection: "column",
               gap: "10px",
@@ -80,9 +101,34 @@ const Events = () => {
 export default Events;
 
 export const loader = async () => {
-  const response = await fetch("http://localhost:3000/event", {
+  const response = await fetch("https://api-gateway-zm1k.onrender.com/event", {
     method: "GET",
     credentials: "include",
   });
   return response;
+};
+
+export const action = async ({ request, params }) => {
+  const formData = await request.formData();
+  const eventData = {
+    eventName: formData.get("name"),
+    venue: formData.get("venue"),
+    date: dayjs(formData.get("date")),
+    description: formData.get("description"),
+    eventType: formData.get("type"),
+  };
+
+  const response = await fetch("https://api-gateway-zm1k.onrender.com/event", {
+    method: "POST",
+    body: JSON.stringify(eventData),
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok && response.status === 422)
+    return { success: false, message: "All fields are required" };
+  if (!response.ok) return { success: false, message: "Internal server error" };
+
+  return { success: true, message: "Event created" };
 };

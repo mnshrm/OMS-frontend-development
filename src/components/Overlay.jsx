@@ -6,6 +6,8 @@ const Overlay = ({ children }) => {
     <Box
       sx={{
         backgroundColor: "rgb(59,59, 59,0.5)",
+        minHeight: "100%",
+        minWidth: "100%",
         height: "100vh",
         width: "100vw",
         display: "flex",
@@ -15,13 +17,10 @@ const Overlay = ({ children }) => {
         zIndex: "5",
         alignItems: "center",
         justifyContent: "center",
+        padding: "1%",
       }}
     >
-      <Box
-        sx={{ backgroundColor: "white", padding: "1rem", borderRadius: "1rem" }}
-      >
-        {children}
-      </Box>
+      {children}
     </Box>
   );
 };

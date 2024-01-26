@@ -90,7 +90,7 @@ const Profile = () => {
     }
     setError(defaultErrorState);
     updatedProfile.confirmPassword = undefined;
-    const response = await fetch("http://localhost:3000/me", {
+    const response = await fetch("https://api-gateway-zm1k.onrender.com/me", {
       method: "PUT",
       body: JSON.stringify({ ...updatedProfile }),
       headers: {
@@ -98,8 +98,10 @@ const Profile = () => {
       },
       credentials: "include",
     });
-    if (response.status === 401)
+    if (response.status === 401) {
       setError({ for: "oldPassword", message: "Password is incorrect" });
+      return;
+    }
     const resData = await response.json();
     updateCadetDetails({
       fname: resData.cadet.firstName,

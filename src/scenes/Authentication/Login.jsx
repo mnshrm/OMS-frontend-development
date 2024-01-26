@@ -72,20 +72,23 @@ const Login = () => {
 export default Login;
 
 export const loader = async ({ params, request }) => {
-  const res = await fetch("http://localhost:3000/checkIfAuthenticated", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  const res = await fetch(
+    "https://api-gateway-zm1k.onrender.com/checkIfAuthenticated",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    }
+  );
   const resData = await res.json();
   return resData;
 };
 
 export const action = async ({ request, params }) => {
   let formData = await request.formData();
-  const res = await fetch("http://localhost:3000/auth/login", {
+  const res = await fetch("https://api-gateway-zm1k.onrender.com/auth/login", {
     method: "POST",
     body: JSON.stringify({
       email: formData.get("email"),

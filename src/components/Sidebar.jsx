@@ -23,23 +23,34 @@ import { useNavigate } from "react-router-dom";
 import { CadetDetailsContext } from "../store/cadet-context";
 
 const options = [
-  { text: "Dashboard", icon: <Dashboard />, to: "" },
-  { text: "Events", icon: <Event />, to: "events" },
-  { text: "Cadet management", icon: <Contacts />, to: "cadetInfo" },
-  { text: "Profile", icon: <Person />, to: "profile" },
+  // { text: "Dashboard", icon: <Dashboard />, to: "", rank:"" },
+  { text: "Profile", icon: <Person />, to: "", rank: "all" },
+  { text: "Events", icon: <Event />, to: "events", rank: "all" },
+  {
+    text: "Cadet management",
+    icon: <Contacts />,
+    to: "cadetInfo",
+    rank: "Rank panel",
+  },
 ];
 
 const Sidebar = ({ open, handleToggle }) => {
   const navigate = useNavigate();
-  const cadetCtx = useContext(CadetDetailsContext);
-  const logoutCadet = useCallback(async () => {
-    const response = await fetch("http://localhost:3000/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
+  const {
+    cadet: { rank },
+    logoutCadet,
+  } = useContext(CadetDetailsContext);
+  const logout = useCallback(async () => {
+    const response = await fetch(
+      "https://api-gateway-zm1k.onrender.com/auth/logout",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
     await response.json();
     if (response.ok) {
-      cadetCtx.logoutCadet();
+      logoutCadet();
       navigate("/login");
     }
   }, []);
@@ -74,27 +85,32 @@ const Sidebar = ({ open, handleToggle }) => {
         </IconButton>
         <Divider sx={{ backgroundColor: "#fff" }} />
         <List sx={{ width: "100%" }}>
-          {options.map((opt) => (
-            <ListItem
-              sx={{
-                padding: 0,
-                "& .css-10hburv-MuiTypography-root": {
-                  fontSize: "0.8rem",
-                },
-              }}
-              key={opt.text}
-            >
-              <ListItemButton
-                onClick={() => {
-                  navigate(opt.to);
-                  handleToggle();
+          {options
+            .filter((opt) => {
+              if (opt.rank === "all") return true;
+              return rank !== "CDT" && rank !== "LCPL";
+            })
+            .map((opt) => (
+              <ListItem
+                sx={{
+                  padding: 0,
+                  "& .css-10hburv-MuiTypography-root": {
+                    fontSize: "0.8rem",
+                  },
                 }}
+                key={opt.text}
               >
-                <ListItemIcon>{opt.icon}</ListItemIcon>
-                <ListItemText>{opt.text}</ListItemText>
-              </ListItemButton>
-            </ListItem>
-          ))}
+                <ListItemButton
+                  onClick={() => {
+                    navigate(opt.to);
+                    handleToggle();
+                  }}
+                >
+                  <ListItemIcon>{opt.icon}</ListItemIcon>
+                  <ListItemText>{opt.text}</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            ))}
         </List>
         <Box
           sx={{
@@ -110,7 +126,7 @@ const Sidebar = ({ open, handleToggle }) => {
             variant="contained"
             sx={{ borderRadius: "0" }}
             fullWidth
-            onClick={logoutCadet}
+            onClick={logout}
           >
             Logout
           </Button>
