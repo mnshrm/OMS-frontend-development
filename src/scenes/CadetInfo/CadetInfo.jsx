@@ -15,7 +15,6 @@ const columns = [
     valueGetter: (params) => {
       return `${params.row.firstName} ${params.row.lastName}`;
     },
-    width: "200",
   },
   { field: "company", headerName: "Company", width: "200" },
   { field: "contact", headerName: "Contact", width: "200" },

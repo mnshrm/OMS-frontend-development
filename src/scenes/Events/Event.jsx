@@ -63,7 +63,7 @@ const Event = () => {
   // To delete an event
   const deleteEvent = useCallback(async () => {
     const response = await fetch(
-      "hhttps://api-gateway-zm1k.onrender.com/event/" + eventData.event._id,
+      "https://api-gateway-zm1k.onrender.com/event/" + eventData.event._id,
       {
         method: "DELETE",
         credentials: "include",
