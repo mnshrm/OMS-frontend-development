@@ -1,5 +1,5 @@
 import { Box, LinearProgress } from "@mui/material";
-import image from "../../assets/NCC-MAIT.PNG";
+import image from "../../assets/NCC-MAIT.png";
 import LoginForm from "./LoginForm";
 import {
   redirect,
