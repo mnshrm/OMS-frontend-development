@@ -25,7 +25,7 @@ import AuthError from "./scenes/Authentication/Error";
 
 const router = createBrowserRouter([
   {
-    path: "login",
+    path: "/login",
     element: <Login />,
     loader: loginLoader,
     action: loginAction,
