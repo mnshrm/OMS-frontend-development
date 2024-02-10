@@ -75,10 +75,6 @@ export const loader = async ({ params, request }) => {
   const res = await fetch(
     "https://api-gateway-d690.onrender.com/checkIfAuthenticated",
     {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       credentials: "include",
     }
   );
