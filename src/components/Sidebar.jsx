@@ -42,7 +42,7 @@ const Sidebar = ({ open, handleToggle }) => {
   } = useContext(CadetDetailsContext);
   const logout = useCallback(async () => {
     const response = await fetch(
-      "https://api-gateway-zm1k.onrender.com/auth/logout",
+      "https://api-gateway-d690.onrender.com/auth/logout",
       {
         method: "POST",
         credentials: "include",

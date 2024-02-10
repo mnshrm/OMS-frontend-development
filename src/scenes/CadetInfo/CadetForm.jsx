@@ -35,7 +35,7 @@ const CadetForm = (props) => {
       setError({ for: "confirmPassword", message: "Password should be same" });
     } else setError(defaultErrorState);
     const response = await fetch(
-      "https://api-gateway-zm1k.onrender.com/cadetInfo",
+      "https://api-gateway-d690.onrender.com/cadetInfo",
       {
         method: "POST",
         body: JSON.stringify(cadetData),

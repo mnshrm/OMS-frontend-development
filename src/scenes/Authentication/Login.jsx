@@ -73,7 +73,7 @@ export default Login;
 
 export const loader = async ({ params, request }) => {
   const res = await fetch(
-    "https://api-gateway-zm1k.onrender.com/checkIfAuthenticated",
+    "https://api-gateway-d690.onrender.com/checkIfAuthenticated",
     {
       method: "POST",
       headers: {
@@ -88,7 +88,7 @@ export const loader = async ({ params, request }) => {
 
 export const action = async ({ request, params }) => {
   let formData = await request.formData();
-  const res = await fetch("https://api-gateway-zm1k.onrender.com/auth/login", {
+  const res = await fetch("https://api-gateway-d690.onrender.com/auth/login", {
     method: "POST",
     body: JSON.stringify({
       email: formData.get("email"),
