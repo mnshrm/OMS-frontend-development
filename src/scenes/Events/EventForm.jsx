@@ -76,8 +76,8 @@ const EventForm = (props) => {
           name="type"
         >
           <MenuItem value={"class"}>Class</MenuItem>
-          <MenuItem value={"internal"}>Internal event</MenuItem>
-          <MenuItem value={"external"}>External event</MenuItem>
+          <MenuItem value={"Internal event"}>Internal event</MenuItem>
+          <MenuItem value={"External event"}>External event</MenuItem>
           <MenuItem value={"camp"}>Camp</MenuItem>
           <MenuItem value={"other"}>Other</MenuItem>
         </Select>
