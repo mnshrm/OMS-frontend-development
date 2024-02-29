@@ -157,7 +157,10 @@ const CadetForm = (props) => {
             <MenuItem value="Delta">Delta</MenuItem>
             <MenuItem value="Golf">Golf</MenuItem>
             <MenuItem value="Hunter">Hunter</MenuItem>
-            <MenuItem value="Foxxtrot">Foxxtrot</MenuItem>
+            <MenuItem value="Foxtrot">Foxtrot</MenuItem>
+            <MenuItem value="India">India</MenuItem>
+            <MenuItem value="Kilo">Kilo</MenuItem>
+            <MenuItem value="Juliet">Juliet</MenuItem>
             <MenuItem value="Rank Panel">Rank panel</MenuItem>
           </Select>
         </Box>
