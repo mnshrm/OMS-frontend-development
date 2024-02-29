@@ -31,6 +31,7 @@ const CadetForm = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+    if (error.for !== "") return;
     if (cadetData.password !== cadetData.confirmPassword) {
       setError({ for: "confirmPassword", message: "Password should be same" });
     } else setError(defaultErrorState);
