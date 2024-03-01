@@ -13,6 +13,7 @@ import React, { useCallback, useState } from "react";
 import { Form, useNavigate, useSubmit } from "react-router-dom";
 
 const defaultErrorState = { for: "", message: "" };
+const dliRe = /^DL[0-9]{2}SDFSFS[0-9]{6}$/i;
 
 const CadetForm = (props) => {
   const [cadetData, setCadetData] = useState({
@@ -31,10 +32,45 @@ const CadetForm = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    if (error.for !== "") return;
-    if (cadetData.password !== cadetData.confirmPassword) {
+    if (cadetData.rank === "CDT" && cadetData.company === "Rank Panel") {
+      setError({
+        for: "company",
+        message: "Cadet can not be a part of Rank panel",
+      });
+      return;
+    } else if (
+      !cadetData.email.trim().includes("@") &&
+      !cadetData.email.trim().includes(".")
+    ) {
+      setError({
+        for: "email",
+        message: "email is invalid",
+      });
+      return;
+      s;
+    } else if (cadetData.rank !== "CDT" && cadetData.company !== "Rank Panel") {
+      setError({
+        for: "company",
+        message: "Ranked cadet should be a part of rank panel",
+      });
+      return;
+    } else if (!dliRe.test(cadetData.dli.trim())) {
+      setError({
+        for: "dli",
+        message: "DLI is not in the correct format, eg :- DL21SDFSFS302050",
+      });
+      return;
+    } else if (cadetData.contact.trim().length < 10) {
+      setError({
+        for: "contact",
+        message: "Invalid contact",
+      });
+      return;
+    } else if (cadetData.password !== cadetData.confirmPassword) {
       setError({ for: "confirmPassword", message: "Password should be same" });
+      return;
     } else setError(defaultErrorState);
+
     const response = await fetch(
       "https://api-gateway-d690.onrender.com/cadetInfo",
       {
