@@ -32,15 +32,23 @@ const CadetForm = (props) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    if (cadetData.rank === "CDT" && cadetData.company === "Rank Panel") {
+    if (cadetData.firstName === "") {
+      setError({ for: "firstName", message: "field can not be empty" });
+    } else if (cadetData.lastName === "") {
+      setError({ for: "lastName", message: "field is not empty" });
+    } else if (
+      cadetData.rank.trim() === "" ||
+      (cadetData.rank === "CDT" && cadetData.company === "Rank Panel")
+    ) {
       setError({
         for: "company",
         message: "Cadet can not be a part of Rank panel",
       });
       return;
     } else if (
-      !cadetData.email.trim().includes("@") &&
-      !cadetData.email.trim().includes(".")
+      cadetData.email.trim() === "" ||
+      (!cadetData.email.trim().includes("@") &&
+        !cadetData.email.trim().includes("."))
     ) {
       setError({
         for: "email",
@@ -54,7 +62,10 @@ const CadetForm = (props) => {
         message: "Ranked cadet should be a part of rank panel",
       });
       return;
-    } else if (!dliRe.test(cadetData.dli.trim())) {
+    } else if (
+      cadetData.dli.trim() === "" ||
+      !dliRe.test(cadetData.dli.trim())
+    ) {
       setError({
         for: "dli",
         message: "DLI is not in the correct format, eg :- DL21SDFSFS302050",
@@ -66,8 +77,11 @@ const CadetForm = (props) => {
         message: "Invalid contact",
       });
       return;
-    } else if (cadetData.password !== cadetData.confirmPassword) {
-      setError({ for: "confirmPassword", message: "Password should be same" });
+    } else if (
+      cadetData.password === "" ||
+      cadetData.password !== cadetData.confirmPassword
+    ) {
+      setError({ for: "confirmPassword", message: "Passwords should be same" });
       return;
     } else setError(defaultErrorState);
 
