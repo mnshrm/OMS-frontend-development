@@ -202,6 +202,8 @@ const CadetForm = (props) => {
             fullWidth
             onChange={handleChange.bind(null, "company")}
             value={cadetData.company}
+            error={error.for === "company"}
+            helperText={error.for === "company" && error.message}
           >
             <MenuItem value="Alpha">Alpha</MenuItem>
             <MenuItem value="Bravo">Bravo</MenuItem>
