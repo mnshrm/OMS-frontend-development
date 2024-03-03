@@ -34,8 +34,10 @@ const CadetForm = (props) => {
     event.preventDefault();
     if (cadetData.firstName === "") {
       setError({ for: "firstName", message: "field can not be empty" });
+      return;
     } else if (cadetData.lastName === "") {
       setError({ for: "lastName", message: "field is not empty" });
+      return;
     } else if (
       cadetData.rank.trim() === "" ||
       (cadetData.rank === "CDT" && cadetData.company === "Rank Panel")
@@ -55,7 +57,6 @@ const CadetForm = (props) => {
         message: "email is invalid",
       });
       return;
-      s;
     } else if (cadetData.rank !== "CDT" && cadetData.company !== "Rank Panel") {
       setError({
         for: "company",
