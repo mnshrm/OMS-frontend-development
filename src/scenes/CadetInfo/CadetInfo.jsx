@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import Header from "../../components/Header";
-import { Box, Button } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { Alert, Box, Button, Snackbar } from "@mui/material";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import CadetForm from "./CadetForm";
 import Overlay from "../../components/Overlay";
@@ -27,8 +27,47 @@ const CadetInfo = () => {
   const toggleOverlay = useCallback(() => {
     setOverlay((pv) => !pv);
   }, []);
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "right",
+    message: "",
+    severity: "success",
+  });
+  const navigate = useNavigate();
+  const { vertical, horizontal, open, message, severity } = state;
+  const ifCadetIsCreated = useCallback(() => {
+    setState({
+      ...state,
+      open: true,
+      message: "Cadet created successfully",
+    });
+    navigate(0);
+  }, []);
+  const ifCadetIsNotCreated = useCallback(() => {
+    setState({
+      ...state,
+      open: true,
+      message: actionData.message,
+      severity: "Cadet can not be created",
+    });
+  }, []);
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
   return (
     <>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+          {message}
+        </Alert>
+      </Snackbar>
       <Header title={"Cadet information"} />
       <Box
         sx={{
@@ -45,7 +84,11 @@ const CadetInfo = () => {
         </Button>
         {overlay && (
           <Overlay>
-            <CadetForm closeOverlay={toggleOverlay} />
+            <CadetForm
+              ifSuccess={ifCadetIsCreated}
+              ifFailure={ifCadetIsNotCreated}
+              closeOverlay={toggleOverlay}
+            />
           </Overlay>
         )}
         <DataGrid

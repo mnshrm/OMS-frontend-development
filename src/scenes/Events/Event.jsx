@@ -44,7 +44,6 @@ const Event = () => {
           message: actionData.message,
         });
       else {
-        console.log("here");
         setState({
           ...state,
           open: true,

@@ -28,7 +28,6 @@ const CadetForm = (props) => {
     confirmPassword: "",
   });
   const [error, setError] = useState({ for: "", message: "" });
-  const navigate = useNavigate();
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -97,7 +96,11 @@ const CadetForm = (props) => {
         credentials: "include",
       }
     );
-    if (!response.ok) console.log("Can not create cadet");
+    if (response.ok) props.ifSuccess();
+    else {
+      props.ifFailure();
+      props.closeOverlay();
+    }
   };
 
   // To handle form change
@@ -203,7 +206,6 @@ const CadetForm = (props) => {
             onChange={handleChange.bind(null, "company")}
             value={cadetData.company}
             error={error.for === "company"}
-            helperText={error.for === "company" && error.message}
           >
             <MenuItem value="Alpha">Alpha</MenuItem>
             <MenuItem value="Bravo">Bravo</MenuItem>
