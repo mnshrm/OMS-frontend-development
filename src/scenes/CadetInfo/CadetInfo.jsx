@@ -34,7 +34,6 @@ const CadetInfo = () => {
     message: "",
     severity: "success",
   });
-  const navigate = useNavigate();
   const { vertical, horizontal, open, message, severity } = state;
   const ifCadetIsCreated = useCallback(() => {
     setState({
@@ -42,7 +41,6 @@ const CadetInfo = () => {
       open: true,
       message: "Cadet created successfully",
     });
-    navigate(0);
   }, []);
   const ifCadetIsNotCreated = useCallback(() => {
     setState({
