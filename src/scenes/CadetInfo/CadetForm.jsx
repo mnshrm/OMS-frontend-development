@@ -47,16 +47,6 @@ const CadetForm = (props) => {
         message: "Cadet can not be a part of Rank panel",
       });
       return;
-    } else if (
-      cadetData.email.trim() === "" ||
-      (!cadetData.email.trim().includes("@") &&
-        !cadetData.email.trim().includes("."))
-    ) {
-      setError({
-        for: "email",
-        message: "email is invalid",
-      });
-      return;
     } else if (cadetData.rank !== "CDT" && cadetData.company !== "Rank Panel") {
       setError({
         for: "company",
@@ -76,6 +66,16 @@ const CadetForm = (props) => {
       setError({
         for: "contact",
         message: "Invalid contact",
+      });
+      return;
+    } else if (
+      cadetData.email.trim() === "" ||
+      (!cadetData.email.trim().includes("@") &&
+        !cadetData.email.trim().includes("."))
+    ) {
+      setError({
+        for: "email",
+        message: "email is invalid",
       });
       return;
     } else if (
