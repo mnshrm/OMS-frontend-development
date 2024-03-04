@@ -39,7 +39,7 @@ const CadetInfo = () => {
     setState({
       ...state,
       open: true,
-      message: "Cadet created successfully",
+      message: "Cadet created successfully, please reload",
     });
   }, []);
   const ifCadetIsNotCreated = useCallback(() => {

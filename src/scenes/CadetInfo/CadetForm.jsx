@@ -262,7 +262,7 @@ const CadetForm = (props) => {
           type="password"
         />
         <Button disabled={loading} type="submit" variant="contained">
-          Submit
+          {loading ? "Submitting" : "Submit"}
         </Button>
       </form>
     </Box>
