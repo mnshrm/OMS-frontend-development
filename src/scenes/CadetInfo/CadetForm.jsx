@@ -28,6 +28,7 @@ const CadetForm = (props) => {
     confirmPassword: "",
   });
   const [error, setError] = useState({ for: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -84,7 +85,7 @@ const CadetForm = (props) => {
       setError({ for: "confirmPassword", message: "Passwords should be same" });
       return;
     } else setError(defaultErrorState);
-
+    setLoading(true);
     const response = await fetch(
       "https://api-gateway-d690.onrender.com/cadetInfo",
       {
@@ -96,6 +97,7 @@ const CadetForm = (props) => {
         credentials: "include",
       }
     );
+    setLoading(false);
     if (response.ok) props.ifSuccess();
     else {
       props.ifFailure();
@@ -259,7 +261,7 @@ const CadetForm = (props) => {
           helperText={error.for === "confirmPassword" && error.message}
           type="password"
         />
-        <Button type="submit" variant="contained">
+        <Button disabled={loading} type="submit" variant="contained">
           Submit
         </Button>
       </form>
