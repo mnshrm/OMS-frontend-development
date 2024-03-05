@@ -62,7 +62,7 @@ const Event = () => {
   // To delete an event
   const deleteEvent = useCallback(async () => {
     const response = await fetch(
-      "https://api-gateway-d690.onrender.com/event/" + eventData.event._id,
+      "https://api-gateway-iima.onrender.com/event/" + eventData.event._id,
       {
         method: "DELETE",
         credentials: "include",
@@ -235,7 +235,7 @@ export default Event;
 
 export const loader = async ({ params }) => {
   const response = await fetch(
-    "https://api-gateway-d690.onrender.com/event/" + params.id,
+    "https://api-gateway-iima.onrender.com/event/" + params.id,
     {
       credentials: "include",
     }
@@ -253,7 +253,7 @@ export const action = async ({ request, params }) => {
   attendanceDetails.status = formData.get("status");
   attendanceDetails.reason = formData.get("reason");
   const response = await fetch(
-    `https://api-gateway-d690.onrender.com/attendance/${params.id}`,
+    `https://api-gateway-iima.onrender.com/attendance/${params.id}`,
     {
       method: "POST",
       body: JSON.stringify(attendanceDetails),

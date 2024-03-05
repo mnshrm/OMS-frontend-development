@@ -87,7 +87,7 @@ const CadetForm = (props) => {
     } else setError(defaultErrorState);
     setLoading(true);
     const response = await fetch(
-      "https://api-gateway-d690.onrender.com/cadetInfo",
+      "https://api-gateway-iima.onrender.com/cadetInfo",
       {
         method: "POST",
         body: JSON.stringify(cadetData),

@@ -101,7 +101,7 @@ const Events = () => {
 export default Events;
 
 export const loader = async () => {
-  const response = await fetch("https://api-gateway-d690.onrender.com/event", {
+  const response = await fetch("https://api-gateway-iima.onrender.com/event", {
     method: "GET",
     credentials: "include",
   });
@@ -118,7 +118,7 @@ export const action = async ({ request, params }) => {
     eventType: formData.get("type"),
   };
 
-  const response = await fetch("https://api-gateway-d690.onrender.com/event", {
+  const response = await fetch("https://api-gateway-iima.onrender.com/event", {
     method: "POST",
     body: JSON.stringify(eventData),
     credentials: "include",
