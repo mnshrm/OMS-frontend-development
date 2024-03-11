@@ -20,7 +20,7 @@ const Nominal = (props) => {
             backgroundColor: "#afd4fa",
           },
           "& .MuiDataGrid-virtualScrollerContent": {
-            height: "40vh",
+            height: "40vh !important",
           },
         }}
         columns={columns}
