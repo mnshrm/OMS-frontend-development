@@ -19,6 +19,9 @@ const Nominal = (props) => {
           "& .css-1pvxecm-MuiDataGrid-root": {
             backgroundColor: "#afd4fa",
           },
+          "& .MuiDataGrid-virtualScrollerContent": {
+            height: "40vh",
+          },
         }}
         columns={columns}
         rows={props.rows}
