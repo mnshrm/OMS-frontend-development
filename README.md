@@ -16,3 +16,7 @@
 ## User Credentials
 - Username: Test4@mail.com, Password: tEST1234
 - Username: Test3@mail.com, Password: Test1234
+
+## NOTE
+- The project is under development, some features might not work as expected
+- Long load time might be experienced
