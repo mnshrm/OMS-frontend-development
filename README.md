@@ -14,5 +14,5 @@
 2) Test CDT: with rank of CDT, user is only authorized to view available events, and mark attendance for available events.
 
 ## User Credentials
-- Username: Test1@mail.com, Password: Test1234
-- Username: Test2@mail.com, Password: Test1234
+- Username: Test4@mail.com, Password: tEST1234
+- Username: Test3@mail.com, Password: Test1234
