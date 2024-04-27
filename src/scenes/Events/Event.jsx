@@ -62,7 +62,7 @@ const Event = () => {
   // To delete an event
   const deleteEvent = useCallback(async () => {
     const response = await fetch(
-      "https://api-gateway-d690.onrender.com/event/" + eventData.event._id,
+      "http://3.108.215.141:3000/event/" + eventData.event._id,
       {
         method: "DELETE",
         credentials: "include",
@@ -234,12 +234,9 @@ const Event = () => {
 export default Event;
 
 export const loader = async ({ params }) => {
-  const response = await fetch(
-    "https://api-gateway-d690.onrender.com/event/" + params.id,
-    {
-      credentials: "include",
-    }
-  );
+  const response = await fetch("http://3.108.215.141:3000/event/" + params.id, {
+    credentials: "include",
+  });
   return response;
 };
 
@@ -253,7 +250,7 @@ export const action = async ({ request, params }) => {
   attendanceDetails.status = formData.get("status");
   attendanceDetails.reason = formData.get("reason");
   const response = await fetch(
-    `https://api-gateway-d690.onrender.com/attendance/${params.id}`,
+    `http://3.108.215.141:3000/attendance/${params.id}`,
     {
       method: "POST",
       body: JSON.stringify(attendanceDetails),

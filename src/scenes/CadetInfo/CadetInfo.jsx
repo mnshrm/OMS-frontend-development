@@ -120,12 +120,9 @@ const CadetInfo = () => {
 export default CadetInfo;
 
 export const loader = async () => {
-  const response = await fetch(
-    "https://api-gateway-d690.onrender.com/cadetInfo",
-    {
-      credentials: "include",
-    }
-  );
+  const response = await fetch("http://3.108.215.141:3000/cadetInfo", {
+    credentials: "include",
+  });
   if (!response.ok)
     return { success: false, message: "Encountered some error" };
   return response;
@@ -145,17 +142,14 @@ export const action = async ({ request }) => {
     password: formData.get("password"),
   };
 
-  const response = await fetch(
-    "https://api-gateway-d690.onrender.com/cadetInfo",
-    {
-      method: "POST",
-      body: JSON.stringify(cadetData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    }
-  );
+  const response = await fetch("http://3.108.215.141:3000/cadetInfo", {
+    method: "POST",
+    body: JSON.stringify(cadetData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
 
   if (!response.ok) return { success: false, message: "Could not add cadet" };
 
