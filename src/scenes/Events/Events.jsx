@@ -101,7 +101,7 @@ const Events = () => {
 export default Events;
 
 export const loader = async () => {
-  const response = await fetch("http://3.108.215.141:3000/event", {
+  const response = await fetch("https://api-gateway-d690.onrender.com/event", {
     method: "GET",
     credentials: "include",
   });
@@ -118,7 +118,7 @@ export const action = async ({ request, params }) => {
     eventType: formData.get("type"),
   };
 
-  const response = await fetch("http://3.108.215.141:3000/event", {
+  const response = await fetch("https://api-gateway-d690.onrender.com/event", {
     method: "POST",
     body: JSON.stringify(eventData),
     credentials: "include",

@@ -90,7 +90,7 @@ const Profile = () => {
     }
     setError(defaultErrorState);
     updatedProfile.confirmPassword = undefined;
-    const response = await fetch("http://3.108.215.141:3000/me", {
+    const response = await fetch("https://api-gateway-d690.onrender.com/me", {
       method: "PUT",
       body: JSON.stringify({ ...updatedProfile }),
       headers: {
